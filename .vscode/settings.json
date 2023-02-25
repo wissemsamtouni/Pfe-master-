@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/c80c705a-40f9-42fa-9bdb-e27828c403d5/AppServices/subscriptions/c80c705a-40f9-42fa-9bdb-e27828c403d5/resourceGroups/useInterface/providers/Microsoft.Web/sites/useInterface",
+    "appService.deploySubpath": "."
+}
