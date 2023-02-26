@@ -136,25 +136,6 @@ async function connectAndQuery() {
     }
 }
 
-app.get('/', async function (req, res) {
-  try {
-    var poolConnection = await sql.connect(config);
-
-    console.log("Reading rows from the Tableb hhhh...");
-    var resultSet = await poolConnection.request().query(`SELECT TOP 20 [temperature], [EventProcessedUtcTime], [PartitionId], [EventEnqueuedUtcTime], [IoTHub]
-    FROM [dbo].[TelemetryData]`);
-
-    console.log(`${resultSet.recordset.length} rows returned.`);
-    // Pass the data to the view
-    res.render('index', { data: resultSet.recordset });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Something went wrong');
-  } finally {
-    // Always close the connection
-    poolConnection.close();
-  }
-});
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

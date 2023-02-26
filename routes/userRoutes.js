@@ -4,7 +4,7 @@ const passport = require('passport');
 const userController = require('../controllers/userController');
 
 // Routes pour l'authentification
-router.get('/login', userController.login_get);
+router.get('/', userController.login_get);
 router.post('/login', userController.login_post);
 
 // Routes pour l'administration des utilisateurs
@@ -27,7 +27,7 @@ router.get('/logout', function(req, res) {
       console.log(err);
       return next(err);
     }
-    res.redirect('/login');
+    res.redirect('/');
   });
 });
 module.exports = router;

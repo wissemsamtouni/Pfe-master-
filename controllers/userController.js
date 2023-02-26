@@ -61,6 +61,7 @@ exports.admin_get = function(req, res, next) {
   }
 };
 exports.user_get = async function(req, res, next) {
+  console.log(req.user && req.user.role === 'utilisateur')
     if (req.user && req.user.role === 'utilisateur') {
       User.findOne({ _id: req.user._id }, async function(err, users) {
         if (err) {
@@ -101,10 +102,8 @@ exports.user_get = async function(req, res, next) {
     const link = `http://localhost:3000/reset/${userWithEmailExist._id}/${userWithEmailExist.token}`;
     await sendEmail(userWithEmailExist, "Réinitialisation du mot de passe", link);
     
-    res.status(200).json({
-      message: "lien de réinitialisation du mot de passe envoyé à votre compte de messagerie",
-      titre: "SUCCESS"
-  });
+    res.redirect('/');
+  
     }catch(err){
       console.log(err);
     }
@@ -116,7 +115,7 @@ exports.user_create_get = function(req, res, next) {
   if (req.user && req.user.role === 'admin') {
     res.render('create_user');
   } else {
-    res.redirect('/login');
+    res.redirect('/');
   }
 };
 exports.resetPassword_get = async function(req, res, next) {
@@ -150,7 +149,7 @@ exports.resetPassword_post = async function(req, res, next) {
         if (err) {
           return next(err);
         }
-        res.redirect('/login');
+        res.redirect('/');
       });
     })
 
@@ -265,8 +264,7 @@ exports.user_update_post = function(req, res, next) {
   exports.index_get =  async function(req, res, next) {
     try {
       var poolConnection = await sql.connect(config);
-  
-      console.log("Reading rows from the Tableb hhhh...");
+ 
       var resultSet = await poolConnection.request().query(`SELECT TOP 5 [temperature], [EventProcessedUtcTime], [PartitionId], [EventEnqueuedUtcTime], [IoTHub]
       FROM [dbo].[TelemetryData]`);
   
